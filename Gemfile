@@ -46,6 +46,10 @@ gem 'capistrano-rails', '1.1.1', group: :development
 
 gem 'active_model_serializers', '0.8.1'
 
+group :development do
+  gem 'meta_request', '0.3.0'
+end
+
 group :development, :test do
   gem 'factory_girl_rails', '4.4.1'
   gem 'fuubar', '1.3.3'

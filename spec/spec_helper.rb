@@ -45,6 +45,8 @@ RSpec.configure do |config|
       c.syntax = :expect
   end
 
+  #config.filter_run focus: true
+
   config.before(:all) do
       DeferredGarbageCollection.start
   end
@@ -52,4 +54,14 @@ RSpec.configure do |config|
   config.after(:all) do
       DeferredGarbageCollection.reconsider
   end
+
+  # factory girl
+  config.include FactoryGirl::Syntax::Methods
+
+  # JSON helper
+  config.include Requests::JsonHelpers, type: :request
+  config.include Requests::JsonHelpers, type: :controller
+
+  # usen auth helper
+  config.include AuthHelpers
 end

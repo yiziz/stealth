@@ -11,9 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140523045050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "access_tokens", force: true do |t|
+    t.integer  "user_id"
+    t.string   "token",      limit: 60
+    t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "access_tokens", ["token"], name: "index_access_tokens_on_token", using: :btree
+  add_index "access_tokens", ["user_id"], name: "index_access_tokens_on_user_id", using: :btree
+
+  create_table "roles", force: true do |t|
+    t.string   "name",       limit: 30
+    t.string   "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "password_digest", limit: 60
+    t.string   "login_name",      limit: 30
+    t.integer  "role_id"
+  end
+
+  add_index "users", ["login_name"], name: "index_users_on_login_name", using: :btree
+  add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
 end
