@@ -1,7 +1,7 @@
 class AppConfig
 
   def self.config_yml
-    @secrets_yml ||= YAML.load_file 'config/config.yml'
+    @config_yml ||= YAML.load_file 'config/config.yml'
   end
 
   def self.access_token
@@ -9,7 +9,7 @@ class AppConfig
   end
 
   def self.access_token_header
-    header = 'X-ACCESS-TOKEN'
+    header = 'Authorization'
     token_config = AppConfig.access_token
     header = token_config['header'] or header if token_config
   end

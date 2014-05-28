@@ -3,15 +3,13 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :authenticate, :authorize
+  before_action :authenticate, :define_params, :pundit_authorize
+  rescue_from Pundit::NotAuthorizedError, with: :not_authorized!
+
+  include Pundit
 
   def current_user
     @current_user
-  end
-  helper_method :current_user
-
-  def perms
-    @perms ||= Authorization.new current_user, params
   end
 
   def authenticate
@@ -21,24 +19,42 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def not_authorized_nil_user
-    render text: 'Not Authorized', status: :unauthorized
+  def not_authorized_nil_user!
+    not_authorized!
   end
 
-  def resource
+  def not_authorized!
+    render text: I18n.t('authorization.not_authorized'), status: :unauthorized
+  end
+
+  def current_resource
     nil
   end
 
-  def authorize
-    if perms.will.allow? resource
-      perms.will.permit_params! params
-    else
-      # TODO
-      if current_user
-        raise ActionController::RoutingError.new('Not Found')
-      else
-        not_authorized_nil_user
-      end
+  def target_resource
+    return unless current_resource
+    current_resource[target_name.to_sym]
+  end
+
+  def pundit_authorize
+    authorize current_resource
+  end
+
+  # overrides pundit's policy def
+  def policy(record)
+    "#{target_name.classify}Policy".constantize.new current_user, record
+  end
+
+  def define_params
+    self.class.send(:define_method, "#{target_name}_params") do
+      klass = target_name.classify
+      params.require(target_name.to_sym).permit(*policy(target_resource || klass.constantize).permitted_attributes)
     end
+  end
+
+private
+
+  def target_name
+    controller_name.singularize
   end
 end

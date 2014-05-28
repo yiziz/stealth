@@ -12,7 +12,7 @@
 
 require 'securerandom'
 
-class Token
+class SecretToken
 
   def self.secrets_yml
     @secrets_yml ||= YAML.load_file 'config/secrets.yml'
@@ -32,7 +32,7 @@ class Token
   end
 
   def self.read_token
-    token_file = Token.token_filename
+    token_file = SecretToken.token_filename
     if File.exist? token_file
       return File.read(token_file).chomp
     end
@@ -40,7 +40,7 @@ class Token
   end
 
   def self.secure_token(secret = nil)
-    token_file = Token.token_filename
+    token_file = SecretToken.token_filename
     return secret if secret and File.write token_file, secret
     if File.exist? token_file
       File.read(token_file).chomp

@@ -9,9 +9,10 @@ describe ApplicationController do
       render json: []
     end
 
-    # stub allow_all for permissions
-    def authorize
-      true
+    # stub correct policy
+    def policy(record)
+      ApplicationPolicy.send(:define_method, :index?) { true }
+      ApplicationPolicy.new(current_user, record)
     end
   end
   

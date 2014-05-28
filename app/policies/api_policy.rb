@@ -1,0 +1,2 @@
+class ApiPolicy < ApplicationPolicy
+end

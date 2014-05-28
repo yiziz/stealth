@@ -20,4 +20,13 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  authentication:
+    no_credentials: "both login name and password are required"
+    invalid_credentials: "invalid login and password"
+  authorization:
+    not_authorized: "not authorized"
+  api:
+    status:
+      success: "success"
+      error: "error"
+      default: "default"

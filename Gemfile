@@ -46,6 +46,8 @@ gem 'capistrano-rails', '1.1.1', group: :development
 
 gem 'active_model_serializers', '0.8.1'
 
+gem 'pundit', '0.2.3'
+
 group :development do
   gem 'meta_request', '0.3.0'
 end
