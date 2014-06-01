@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140523045050) do
+ActiveRecord::Schema.define(version: 20140531054454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,19 @@ ActiveRecord::Schema.define(version: 20140523045050) do
 
   add_index "access_tokens", ["token"], name: "index_access_tokens_on_token", using: :btree
   add_index "access_tokens", ["user_id"], name: "index_access_tokens_on_user_id", using: :btree
+
+  create_table "emails", force: true do |t|
+    t.string   "mailer",     limit: 30
+    t.string   "action",     limit: 30
+    t.text     "target"
+    t.text     "options"
+    t.boolean  "sent",                  default: false
+    t.datetime "sent_on"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "emails", ["sent"], name: "index_emails_on_sent", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name",       limit: 30

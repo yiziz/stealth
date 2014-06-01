@@ -1,4 +1,6 @@
 class AccessToken < ActiveRecord::Base
+  include ModelSerializer
+  
   belongs_to :user
 
   before_create :generate_access_token

@@ -5,6 +5,6 @@ FactoryGirl.define do
     password_confirmation 'aoeuaoe8'
   end
   factory :norm_user, class: User, parent: :user do
-    role Role.find(1)
+    #role Role.find(1)
   end
 end

@@ -36,17 +36,29 @@ gem 'bcrypt', '~> 3.1.7'
 # Use unicorn as the app server
 # gem 'unicorn'
 
-# Use Capistrano for deployment
-gem 'capistrano-rails', '1.1.1', group: :development
-
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
 # self added
 
+# JSON serializer
 gem 'active_model_serializers', '0.8.1'
 
+# Authorization
 gem 'pundit', '0.2.3'
+
+# Text Parser
+gem 'nokogiri', '1.6.2.1'
+
+# HTML email formatter
+gem 'premailer', '1.8.2'
+
+# CRON
+gem 'whenever', '0.9.2'
+
+# deployment
+gem 'capistrano', '3.2.1'
+gem 'capistrano-rails', '1.1.1'
 
 group :development do
   gem 'meta_request', '0.3.0'

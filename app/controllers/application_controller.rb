@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate, :define_params, :pundit_authorize
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized!
 
-  include Pundit
+  include Pundit, SendingMail
 
   def current_user
     @current_user
