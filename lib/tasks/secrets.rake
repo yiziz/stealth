@@ -1,13 +1,18 @@
 require Rake.original_dir + '/config/initializers/secret_token.rb'
-namespace :secret do
-  desc 'Create token'
+namespace :secrets do
+  desc 'Create secret token'
   task :create do
-    Rake::Task['token:mkdir'].invoke
-    Rake::Task['token:chown'].invoke
+    Rake::Task['secrets:mkdir'].invoke
+    Rake::Task['secrets:chown'].invoke
+    Rake::Task['secrets:chmod'].invoke
   end
   desc 'Change token directory owner'
   task :chown do
     sh "sudo chown -R #{ENV['USER']} #{SecretToken.token_dir}"
+  end
+  desc 'Update token directory permissions'
+  task :chmod do
+    sh "sudo chmod -R 700 #{SecretToken.token_dir}"
   end
   desc 'Create token directory'
   task :mkdir do

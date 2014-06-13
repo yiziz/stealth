@@ -45,7 +45,7 @@ class SecretToken
     if File.exist? token_file
       File.read(token_file).chomp
     else
-      token = SecureRandom.hex 64
+      token = SecureRandom.hex self.secrets_yml['token_length']/2
       File.write token_file, token
       token
     end

@@ -1,0 +1,29 @@
+module.exports = function(grunt) {
+
+  grunt.initConfig({
+
+    // Pass config options to 'grunt-s3'
+    s3: {
+      options: {
+        bucket: 'labnook',
+        access: 'public-read'
+      },
+    production: {
+        upload: [
+          {
+            src: 'dist/assets/*',
+            dest: 'assets/'
+          }
+        ]
+      }
+    } // end s3
+
+  }); // end grunt.initConfig
+
+  // tell grunt to load and use the grunt-s3 extension
+  grunt.loadNpmTasks('grunt-s3');
+
+  // Default task(s).
+  grunt.registerTask('default', ['s3']);
+
+};

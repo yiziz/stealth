@@ -1,0 +1,5 @@
+cli:
+  repo_url: https://github.com/stefanpenner/ember-cli.git
+  link_dir: ~/npm/ember-cli
+repo_url: git@github.com:yz0075/stealth_ember.git
+deploy_dir: /tmp/ember/stealth

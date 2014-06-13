@@ -18,8 +18,10 @@ class Email < ActiveRecord::Base
   end
   def options
     hash_obj = eval self[:options] if self[:options].is_a? String
-    hash_obj.each do |k,v|
-      hash_obj[k] = v.to_mi if v.is_ms?
+    ActiveRecord::Base.transaction do
+      hash_obj.each do |k,v|
+        hash_obj[k] = v.to_mi if v.is_ms?
+      end 
     end if hash_obj.is_a? Hash
   end
 
